@@ -4,7 +4,8 @@ const express = require('express')();
 const http = require('http').Server(express);
 const serverSocket = require('socket.io')(http);
 
-const porta = 8000;
+//process.env.PORT e uma porta definida pelo heroku
+const porta = process.env.PORT || 8000;
 
 http.listen(porta, () => console.log('Servidor iniciado em http://localhost:'+porta));
 

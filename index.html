@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Live Chat</title>
+    </head>
+    <body>
+
+        <ul id="messages"></ul>
+
+        <form>
+            
+            <input type="text" id="msg" placeholder="Digite sua mensagem aqui...">
+
+            <div id="status"></div>
+
+            <button type="submit">Enviar</button>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            
+            $(() => {
+                //chamando o metodo io() o socket é automaticamente instanciado
+                const socket = io();
+                $('#status').html('Conectado!');
+
+                $('form').submit(evento => {
+                    socket.emit('chat msg', $('#msg').val());
+                    return false;
+                });
+
+                socket.on('chat msg', msg => $('#messages').append($('<li>').text(msg)));
+
+            });
+
+        </script>
+    </body>
+</html>
